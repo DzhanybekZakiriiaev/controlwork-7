@@ -19,7 +19,7 @@ public class UserDAO extends BaseDAO {
     }
 
     public String getEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email LIKE '" + email + "'";
+        String sql = "SELECT users.email FROM users WHERE email LIKE '" + email + "'";
         try {
             return jdbcTemplate.queryForObject(sql, String.class);
         } catch (EmptyResultDataAccessException e) {
