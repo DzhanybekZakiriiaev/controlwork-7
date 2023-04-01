@@ -15,9 +15,10 @@ public class FoodDAO extends BaseDAO{
 
     @Override
     public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS foods (\n" +
+        jdbcTemplate.execute("CREATE TYPE dish_type AS ENUM ('PIZZA', 'DESSERT', 'HOT_BEVERAGE', 'COCKTAIL', 'BELTER_FOOD');" +
+                "CREATE TABLE IF NOT EXISTS foods (\n" +
                 "  food_id SERIAL PRIMARY KEY,\n" +
-                "  food_type TEXT NOT NULL,\n" +
+                "  food_type dish_type NOT NULL,\n" +
                 "  food_name TEXT NOT NULL,\n" +
                 "  food_price INTEGER NOT NULL,\n" +
                 "  place_id INTEGER NOT NULL REFERENCES places(place_id)\n" +
@@ -27,11 +28,11 @@ public class FoodDAO extends BaseDAO{
                 "('HOT_BEVERAGE', 'Tea1', 2, 2),\n" +
                 "('COCKTAIL', 'Cocktail1', 8, 3),\n" +
                 "('BELTER_FOOD', 'BelterFood1', 15, 2);");
-
     }
 
+
     public List<Food> getFoodsByPlaceId(Integer placeId) {
-        String sql = "SELECT * FROM foods WHERE place_id = ?";
+        String sql = "SELECT food_id AS id, food_type AS dishType, food_name AS dishName, food_price AS price FROM foods WHERE place_id = ?";
         return jdbcTemplate.query(sql, new Object[]{placeId}, new BeanPropertyRowMapper<>(Food.class));
     }
 

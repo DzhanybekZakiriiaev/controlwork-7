@@ -1,7 +1,7 @@
 package com.example.controlwork7.dao;
 
-import com.example.controlwork7.dto.PlaceDTO;
 import com.example.controlwork7.entity.Food;
+import com.example.controlwork7.entity.Place;
 import com.example.controlwork7.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -30,13 +30,13 @@ public class PlaceDAO extends BaseDAO{
                 "       ('Dessert Den', 'Satisfy your sweet tooth'),\n" +
                 "       ('Cocktail Cove', 'Creative cocktails and more');");
     }
-    public List<PlaceDTO> getAllPlaces() {
+    public List<Place> getAllPlaces() {
         String sql = "SELECT * FROM places";
-        List<PlaceDTO> places = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PlaceDTO.class));
+        List<Place> places = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Place.class));
 
-        for (PlaceDTO place : places) {
+        for (Place place : places) {
             List<Food> foods = foodService.getFoodsByPlaceId(place.getPlaceId());
-            place.setFoods(foods);
+            place.setPlaceFoods(foods);
         }
 
         return places;
