@@ -42,9 +42,7 @@ public class UserDAO extends BaseDAO {
                 "id SERIAL PRIMARY KEY," +
                 "username TEXT NOT NULL," +
                 "email TEXT NOT NULL," +
-                "password TEXT NOT NULL);");
-
-        jdbcTemplate.execute("INSERT INTO users (username, email, password)\n" +
+                "password TEXT NOT NULL);" + "INSERT INTO users (username, email, password)\n" +
                 "VALUES ('admin', 'admin@gmail.com', '"
                 + new BCryptPasswordEncoder().encode("admin") + "')," +
                 "('quest', 'quest@gmail.com', '"
