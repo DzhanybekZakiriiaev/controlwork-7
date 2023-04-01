@@ -1,11 +1,19 @@
 package com.example.controlwork7.dao;
 
+import com.example.controlwork7.dto.PlaceDTO;
+import com.example.controlwork7.entity.Food;
+import com.example.controlwork7.service.FoodService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class PlaceDAO extends BaseDAO{
+    @Autowired
+    private FoodService foodService;
 
     public PlaceDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
@@ -22,4 +30,16 @@ public class PlaceDAO extends BaseDAO{
                 "       ('Dessert Den', 'Satisfy your sweet tooth'),\n" +
                 "       ('Cocktail Cove', 'Creative cocktails and more');");
     }
+    public List<PlaceDTO> getAllPlaces() {
+        String sql = "SELECT * FROM places";
+        List<PlaceDTO> places = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PlaceDTO.class));
+
+        for (PlaceDTO place : places) {
+            List<Food> foods = foodService.getFoodsByPlaceId(place.getPlaceId());
+            place.setFoods(foods);
+        }
+
+        return places;
+    }
+
 }

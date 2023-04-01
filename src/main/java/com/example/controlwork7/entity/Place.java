@@ -11,5 +11,5 @@ public class Place {
     private Integer placeId;
     private String placeName;
     private String placeDescription;
-    private List<Dish> placeDishes;
+    private List<Food> placeFoods;
 }

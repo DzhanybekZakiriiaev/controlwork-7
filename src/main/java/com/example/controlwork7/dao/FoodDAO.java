@@ -1,7 +1,11 @@
 package com.example.controlwork7.dao;
 
+import com.example.controlwork7.entity.Food;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class FoodDAO extends BaseDAO{
@@ -25,4 +29,11 @@ public class FoodDAO extends BaseDAO{
                 "('BELTER_FOOD', 'BelterFood1', 15, 2);");
 
     }
+
+    public List<Food> getFoodsByPlaceId(Integer placeId) {
+        String sql = "SELECT * FROM foods WHERE place_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{placeId}, new BeanPropertyRowMapper<>(Food.class));
+    }
+
+
 }

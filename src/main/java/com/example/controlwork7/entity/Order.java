@@ -1,7 +1,11 @@
 package com.example.controlwork7.entity;
 
-import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+@Data
+@RequiredArgsConstructor
 public class Order {
     private Integer orderId;
     private User clientOrder;
