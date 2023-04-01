@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 public class OrderDTO {
     private UserDTO client;
     private Food food;
-    private Place place;
+    private PlaceDTO place;
     private LocalDateTime time;
 }
